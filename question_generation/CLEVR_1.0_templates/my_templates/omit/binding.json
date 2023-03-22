@@ -1,0 +1,28 @@
+{
+    "params": [
+      {"type": "Size", "name": "<Z>"},
+      {"type": "Color", "name": "<C>"},
+      {"type": "Shape", "name": "<S>"},
+      {"type": "Relation", "name": "<R>"},
+      {"type": "Size", "name": "<Z2>"},
+      {"type": "Color", "name": "<C2>"},
+      {"type": "Shape", "name": "<S2>"}
+    ],
+    "text": [
+        "A <S>.",
+        "A <S2>.",
+        "A <C> <S>.",
+        "A <C2> <S2>.",
+        "A <Z> <S> and a <Z2> <S2>.",
+        "A <Z2> <S> and a <Z> <S2>.",
+        "<R> is a <C> <S>.",
+        "<R> is a <C2> <S2>."
+    ],
+    "nodes": [
+      {"type": "scene", "inputs": []},
+      {"type": "filter_unique", "inputs": [0], "side_inputs": ["<Z>", "<C>", "<S>"]},
+      {"type": "relate_filter_unique", "inputs": [1], "side_inputs": ["<R>", "<Z2>", "<C2>", "<S2>"]},
+      {"type": "query_size", "inputs": [2]}
+    ],
+    "constraints": []
+  }

@@ -687,6 +687,9 @@ def main(args):
 
 if __name__ == '__main__':
   args = parser.parse_args()
+
+  # set all seeds
+  random.seed(42)
   if args.profile:
     import cProfile
     cProfile.run('main(args)')
