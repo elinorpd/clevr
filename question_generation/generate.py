@@ -87,9 +87,9 @@ def gen_spatial(obj1_pos, obj1_color, obj1_shape, obj2_pos, obj2_color, obj2_sha
     wrong2 = f"On the {obj1_pos} is a {obj2_color} {obj2_shape}."
     return [[right1, wrong1], [right2, wrong2]]
 
-
+num_skip=0
 scenes = glob.glob(args.scenes_dir + '*.json')
-
+# print(scenes)
 for scene in scenes:
     img_scene = json.load(open(scene))
     fname = img_scene['image_filename']
@@ -99,6 +99,7 @@ for scene in scenes:
     # if theres an overlap of attributes, continue
     if obj1['shape'] == obj2['shape'] or obj1['color'] == obj2['color'] or obj1['size'] == obj2['size'] or obj1['material'] == obj2['material']:
         # print(f"-------------overlap, skipping---------------")
+        num_skip+=1
         continue
     
     for (pos, (ob1,ob2)) in img_scene['relationships'].items():
@@ -115,7 +116,7 @@ for scene in scenes:
     pair_binding_color[fname] = gen_pair_binding_color(obj1['color'], obj1['shape'], obj2['color'], obj2['shape'])
     spatial[fname] = gen_spatial(obj1_rel_pos, obj1['color'], obj1['shape'], obj2_rel_pos, obj2['color'], obj2['shape'])
 
-
+print(f"number skipped: {num_skip}")
 json.dump(recognition_shape,open(args.output_dir + 'recognition_shape.json','w'))
 json.dump(recognition_color,open(args.output_dir + 'recognition_color.json','w'))
 json.dump(binding_color_shape,open(args.output_dir + 'binding_color_shape.json','w'))
